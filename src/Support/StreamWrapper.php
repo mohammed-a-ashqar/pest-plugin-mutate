@@ -179,6 +179,8 @@ class StreamWrapper
 
     public function stream_lock(int $operation): bool
     {
+        $operation &= LOCK_SH | LOCK_EX | LOCK_UN | LOCK_NB;
+
         // PHP probes lock support with an operation of 0 before locking.
         if ($operation === 0) {
             return true;
