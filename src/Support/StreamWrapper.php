@@ -179,7 +179,7 @@ class StreamWrapper
 
     public function stream_lock(int $operation): bool
     {
-        return flock($this->resource, LOCK_SH);
+        return flock($this->resource, $operation);
     }
 
     public function stream_metadata(string $path, int $option, mixed $value): bool
