@@ -1,0 +1,21 @@
+name: Proof (Windows + Linux)
+
+on: ['push']
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    name: PHP 8.4 - ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        tools: composer:v2
+        coverage: none
+    - run: composer update --prefer-stable --no-interaction --no-progress
+    - run: vendor/bin/pest tests/Unit/Support/StreamWrapperTest.php
